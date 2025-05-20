@@ -37,3 +37,18 @@ class Trip:
         finally:
             cursor.close()
             connection.close()
+    
+     @classmethod
+    def update(cls, trip):
+        try:
+            connection = get_connection()
+            cursor = connection.cursor()
+            cursor.execute('UPDATE trip SET name= %s, city= %s, country= %s,latitude= %s,longitude= %s WHERE id=%s',
+                           (trip.name, trip.city, trip.country, trip.latitude, trip.longitude))
+            connection.commit()
+            return cursor.lastrowid
+        except Error as ex:
+            return str(ex)
+        finally:
+            cursor.close()
+            connection.close()
