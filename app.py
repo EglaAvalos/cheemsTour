@@ -77,7 +77,7 @@ def update_trip(trip_id):
 def delete_trip(id):
     deleted = Trip.delete(id)
     success = deleted > 0
-    return jsonify({"success": success}), 200 if success else 404
+    return jsonify(success), 201
 
 
 

@@ -99,8 +99,6 @@ class Trip:
             connection.commit()
             return cursor.rowcount
         except Error as ex:
-            # Aquí podrías loggear el error si quieres
-            print(f"Error deleting trip: {ex}")
             return 0
         finally:
             if cursor:
