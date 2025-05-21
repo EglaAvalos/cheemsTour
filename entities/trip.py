@@ -4,12 +4,13 @@ from mysql.connector import Error
 
 class Trip:
 
-    def __init__(self, name, city, country, latitude, longitude):
+    def __init__(self, name, city, country, latitude, longitude,id=None):
         self.name = name
         self.city = city
         self.country = country
         self.latitude = latitude
         self.longitude = longitude
+        self.id = id
 
     @classmethod
     def get(cls):

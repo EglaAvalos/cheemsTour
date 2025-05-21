@@ -58,14 +58,8 @@ def update_trip(trip_id):
 
     success = updated_rows > 0
     if updated_rows == 0:
-     return jsonify({
-            'success': False,
-            'message': f'No se encontró un viaje con id={trip_id}.'
-        }), 404
-    return jsonify({
-        'success': True,
-        'message': f'El viaje con id={trip_id} fue actualizado correctamente.'
-    }), 200
+        return jsonify(False), 404
+    return jsonify(success), 201
 
 
 @app.route("/trip/<int:id>", methods=["DELETE"])
