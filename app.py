@@ -25,19 +25,52 @@ def save_trip():
     return jsonify(success), 201
 
 
-@app.route("/trip", methods=["PUT"])
-def update_trip():
+@app.route('/trip/<int:trip_id>', methods=['PUT'])
+def update_trip(trip_id):
+    """
+    PUT /trip/<trip_id>
+    Actualiza un viaje existente.
+
+    Parámetros:
+    - trip_id (int): ID del viaje
+
+    JSON esperado:
+    {
+        "name": "Viaje a Cusco",
+        "city": "Cusco",
+        "country": "Perú",
+        "latitude": -13.5319,
+        "longitude": -71.9675
+    }
+
+    Respuestas:
+    - 200 OK: Actualización exitosa
+    - 400 Bad Request: Faltan campos
+    - 404 Not Found: No se encontró el viaje
+    - 500 Internal Server Error: Error en la base de datos
+    """
     data = request.json
     trip = Trip(
-        name=data["name"],
-        city=data["city"],
-        country=data["country"],
-        latitude=data["latitude"],
-        longitude=data["longitude"],
+        id=trip_id,
+        name=data['name'],
+        city=data['city'],
+        country=data['country'],
+        latitude=data['latitude'],
+        longitude=data['longitude']
     )
-    id = Trip.save(trip)
-    success = id is not None
-    return jsonify(success), 201
+    updated_rows = Trip.update(trip)  
+
+
+    success = updated_rows > 0
+    if updated_rows == 0:
+     return jsonify({
+            'success': False,
+            'message': f'No se encontró un viaje con id={trip_id}.'
+        }), 404
+    return jsonify({
+        'success': True,
+        'message': f'El viaje con id={trip_id} fue actualizado correctamente.'
+    }), 200
 
 
 @app.route("/trip/<int:id>", methods=["DELETE"])
