@@ -4,8 +4,7 @@ from mysql.connector import Error
 
 class Trip:
 
-    def __init__(self, id,name, city, country, latitude, longitude):
-        self.id=id
+    def __init__(self, name, city, country, latitude, longitude):
         self.name = name
         self.city = city
         self.country = country

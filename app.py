@@ -10,16 +10,11 @@ def trips():
     return trips
 
 
-@app.route("/trip", methods=["POST"])
+
+@app.route('/trip', methods=['POST'])
 def save_trip():
     data = request.json
-    trip = Trip(
-        name=data["name"],
-        city=data["city"],
-        country=data["country"],
-        latitude=data["latitude"],
-        longitude=data["longitude"],
-    )
+    trip = Trip(name=data['name'], city = data['city'], country=data['country'], latitude=data['latitude'], longitude=data['longitude'])
     id = Trip.save(trip)
     success = id is not None
     return jsonify(success), 201
