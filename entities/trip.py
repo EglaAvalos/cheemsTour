@@ -62,25 +62,22 @@ class Trip:
 
     @classmethod
     def delete(cls, id):
-        """
-        Deletes a trip from the database by ID
 
-        Parameters:
-
-         id(int): the ID of the trip to delete
-
-        Returns:
-         int: The number of rows affected (1 if successful, 0 if not found).
-         str: Error message if the operation fails.
-        """
+        connection = None
+        cursor = None
         try:
             connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute("DELET FROM trip WHERE id=%s", (id,))
+            cursor.execute("DELETE FROM trip WHERE id=%s", (id,))
             connection.commit()
             return cursor.rowcount
         except Error as ex:
-            return str(ex)
+            # Aquí podrías loggear el error si quieres
+            print(f"Error deleting trip: {ex}")
+            return 0
         finally:
-            cursor.close()
-            connection.close()
+            if cursor:
+                cursor.close()
+            if connection:
+                connection.close()
+

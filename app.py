@@ -40,19 +40,12 @@ def update_trip():
     return jsonify(success), 201
 
 
-@app.route("/trip<int:id>", methods=["DELETE"])
+@app.route("/trip/<int:id>", methods=["DELETE"])
 def delete_trip(id):
-    """Deletes a trip record identified by its ID
-    Args:
-        id (int): The unique identifier of the trip to be deleted.
-
-    Returns:
-        Response: A JSON response indicating whether the deletion was successful.
-              Returns HTTP 200 if deleted, 404 if no matching record was found.
-    """
     deleted = Trip.delete(id)
     success = deleted > 0
     return jsonify({"success": success}), 200 if success else 404
+
 
 
 if __name__ == "__main__":
